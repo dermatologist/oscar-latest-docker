@@ -1,0 +1,25 @@
+db:
+  restart: "always"
+  image: mariadb:10
+  command: "mysqld --character-set-server=utf8 --collation-server=utf8_general_ci"
+  environment:
+    MYSQL_ROOT_PASSWORD: liyi
+    MYSQL_DATABASE: oscar_mcmaster
+    MYSQL_USER: oscar
+    MYSQL_PASSWORD: oscar
+  volumes:
+    - ./dbdump/oscarON.sql:/docker-entrypoint-initdb.d/1-schema.sql
+    - ./oscar/database/mysql/updates:/docker-entrypoint-initdb.d
+
+# Tomcat container
+tomcat_oscar:
+  restart: "always"
+  build: .
+  ports:
+      - "8080:8080"  #HOST:CONTAINER
+  environment:
+    JDBC_URL: jdbc:mysql://db:3306/oscar_mcmaster?autoReconnect=true
+    JDBC_USER: root
+    JDBC_PASS: liyi
+  links:
+    - db    
