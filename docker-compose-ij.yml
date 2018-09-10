@@ -2,12 +2,13 @@ version: '3'
 
 services:
   db:
-    image: mysql:5.7
+    image: mariadb:10
+    command: "mysqld --character-set-server=utf8 --collation-server=utf8_general_ci"
     environment:
-      - MYSQL_ROOT_PASSWORD=liyi
-      - MYSQL_DATABASE=oscar_mcmaster
-      - MYSQL_USER=oscar
-      - MYSQL_PASSWORD=oscar
+      MYSQL_ROOT_PASSWORD: liyi
+      MYSQL_DATABASE: oscar_mcmaster
+      MYSQL_USER: oscar
+      MYSQL_PASSWORD: oscar
     networks:
       - overlay
     volumes:
