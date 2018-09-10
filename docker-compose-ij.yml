@@ -11,7 +11,16 @@ services:
     networks:
       - overlay
     volumes:
-      - ./dbdump/oscarON.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ./oscar/database/mysql/oscarinit.sql:/docker-entrypoint-initdb.d/a1-schema.sql #loaded in alphabetical order
+      - ./oscar/database/mysql/oscarinit_on.sql:/docker-entrypoint-initdb.d/a2-schema.sql
+      - ./oscar/database/mysql/oscardata.sql:/docker-entrypoint-initdb.d/b1-data.sql
+      - ./oscar/database/mysql/oscardata_on.sql:/docker-entrypoint-initdb.d/b2-data.sql
+      - ./oscar/database/mysql/icd10.sql:/docker-entrypoint-initdb.d/c1-icd.sql
+      - ./oscar/database/mysql/caisi/initcaisi.sql:/docker-entrypoint-initdb.d/c2-caisi.sql
+      - ./oscar/database/mysql/caisi/initcaisidata.sql:/docker-entrypoint-initdb.d/c3-caisi.sql
+      - ./oscar/database/mysql/icd10_issue_groups.sql:/docker-entrypoint-initdb.d/c4-icd.sql
+      - ./oscar/database/mysql/measurementMapData.sql:/docker-entrypoint-initdb.d/c5-mmd.sql
+      - ./oscar/database/mysql/expire_oscardoc.sql:/docker-entrypoint-initdb.d/c6-pw.sql
       - ./oscar/database/mysql/updates:/docker-entrypoint-initdb.d
   tomcat_oscar:
     image: oscar:15
