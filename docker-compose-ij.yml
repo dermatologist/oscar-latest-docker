@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: mariadb:10
+    image: beapen/oscardb:15
     build:
       context: .
       dockerfile: Dockerfile-mysql
@@ -10,7 +10,7 @@ services:
       - overlay
 
   tomcat_oscar:
-    image: oscar:15
+    image: beapen/oscaremr:15
     build:
       context: .
       dockerfile: Dockerfile-oscar
