@@ -7,7 +7,7 @@ ENV MYSQL_PASSWORD=oscar
 
 COPY oscar/database/mysql /tmp/mysql
 COPY oscar/database/mysql/caisi /tmp/caisi
-COPY oscar/database/updates /tmp/updates
+COPY oscar/database/mysql/updates /tmp/updates
 
 RUN cat /tmp/mysql/oscarinit.sql /tmp/mysql/oscarinit_on.sql /tmp/mysql/oscardata.sql \
 		/tmp/mysql/oscardata_on.sql /tmp/mysql/icd10.sql /tmp/caisi/initcaisi.sql \
