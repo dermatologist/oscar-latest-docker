@@ -1,4 +1,4 @@
-FROM mariadb:10
+FROM mysql:5.6
 
 ENV MYSQL_ROOT_PASSWORD=liyi
 ENV MYSQL_DATABASE=oscar_mcmaster
@@ -11,10 +11,13 @@ COPY oscar/database/mysql/updates /tmp/updates
 
 RUN cat /tmp/mysql/oscarinit.sql /tmp/mysql/oscarinit_on.sql /tmp/mysql/oscardata.sql \
 		/tmp/mysql/oscardata_on.sql /tmp/mysql/icd10.sql /tmp/caisi/initcaisi.sql \
-		/tmp/caisi/initcaisidata.sql /tmp/mysql/icd10_issue_groups.sql \
+		/tmp/mysql/icd10_issue_groups.sql \
 		/tmp/mysql/measurementMapData.sql /tmp/mysql/expire_oscardoc.sql \
 		>> /tmp/mysql/oscar.sql
-RUN cat /tmp/updates/*.sql >> /tmp/mysql/oscar.sql
+RUN cat /tmp/updates/u*.sql >> /tmp/mysql/oscar.sql
+RUN cat /tmp/updates/h*.sql >> /tmp/mysql/oscar.sql
+
+RUN sed -i 's/insert into/INSERT IGNORE INTO/gI' /tmp/mysql/oscar.sql
 
 RUN cp /tmp/mysql/oscar.sql /docker-entrypoint-initdb.d/oscar.sql
 
