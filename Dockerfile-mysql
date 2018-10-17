@@ -11,11 +11,11 @@ COPY oscar/database/mysql/updates /tmp/updates
 
 RUN cat /tmp/mysql/oscarinit.sql /tmp/mysql/oscarinit_on.sql /tmp/mysql/oscardata.sql \
 		/tmp/mysql/oscardata_on.sql /tmp/mysql/icd10.sql /tmp/caisi/initcaisi.sql \
-		/tmp/mysql/icd10_issue_groups.sql \
+		/tmp/caisi/initcaisidata.sql /tmp/mysql/icd10_issue_groups.sql \
 		/tmp/mysql/measurementMapData.sql /tmp/mysql/expire_oscardoc.sql \
 		>> /tmp/mysql/oscar.sql
-RUN cat /tmp/updates/u*.sql >> /tmp/mysql/oscar.sql
-RUN cat /tmp/updates/h*.sql >> /tmp/mysql/oscar.sql
+# RUN cat /tmp/updates/u*.sql >> /tmp/mysql/oscar.sql
+# RUN cat /tmp/updates/h*.sql >> /tmp/mysql/oscar.sql
 
 RUN sed -i 's/insert into/INSERT IGNORE INTO/gI' /tmp/mysql/oscar.sql
 
