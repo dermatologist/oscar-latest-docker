@@ -14,11 +14,15 @@ This is an experimental application and is not for production use.
 * Just clone this repo, add database dump (Oscar15ON.sql) to dbdump and ./install.sh
 * Access oscar at http://localhost:8091/oscar_mcmaster/
 
+## Using external database
+* Change the setting in docker-compose.yml
+
 ## What the script does
 * Checks out master branch from OSCAR repo.
 * Compile with maven.
 * Create Docker containers.
 * Deploy the database and application in the containers.
+* If you want to use an existing database, add it in *docker-compose.yml*
 
 ## Author
 * [Bell Eapen](http://nuchange.ca)
