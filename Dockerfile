@@ -14,6 +14,7 @@ COPY --from=builder /home/oscar/target/oscar-14.0.0-SNAPSHOT.war /usr/local/tomc
 # ADD code/oscar/target /usr/local/tomcat/webapps
 ADD conf /usr/local/tomcat/conf
 
+COPY conf/oscar_mcmaster.properties /root/oscar_mcmaster.properties
 ENV JDBC_URL=jdbc:mysql://db:3306/oscar_mcmaster?autoReconnect=true&zeroDateTimeBehavior=round&useOldAliasMetadataBehavior=true&jdbcCompliantTruncation=false
 ENV JDBC_USER=root
 ENV JDBC_PASS=liyi
