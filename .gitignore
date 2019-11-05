@@ -8,3 +8,5 @@ dbdump/OscarON15.sql
 *.war
 *.log
 
+
+.vscode

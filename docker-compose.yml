@@ -3,47 +3,51 @@
 # Website: http://nuchange.ca
 # Updated by Clark Van Oyen from countable.ca 2019
 # MySQL database shared with tomcat containers.
+version: '3.0'
+services:
+  # builder:
+  #   image: openjdk:8
+  #   volumes:
+  #     - .:/code
+  #     - $HOME/.m2:/root/.m2
+  #   working_dir: /code
+  #   command: ./build.sh
 
-builder:
-  image: openjdk:8
-  volumes:
-    - .:/code
-    - $HOME/.m2:/root/.m2
-  working_dir: /code
-  command: ./build.sh
+  db:
+    restart: "always"
+    image: mariadb:10.4
+    command: "mysqld --character-set-server=utf8 --collation-server=utf8_general_ci"
+    environment:
+      MYSQL_ROOT_PASSWORD: liyi
+      MYSQL_DATABASE: oscar_mcmaster
+      MYSQL_USER: oscar
+      MYSQL_PASSWORD: oscar
+    volumes:
+      - ./dbdump:/docker-entrypoint-initdb.d
+      - ./conf/my.cnf:/etc/mysql/my.cnf
+      - .:/code
 
-db:
-  restart: "always"
-  image: mariadb:10.4
-  command: "mysqld --character-set-server=utf8 --collation-server=utf8_general_ci"
-  environment:
-    MYSQL_ROOT_PASSWORD: liyi
-    MYSQL_DATABASE: oscar_mcmaster
-    MYSQL_USER: oscar
-    MYSQL_PASSWORD: oscar
-  volumes:
-    - ./dbdump:/docker-entrypoint-initdb.d
-    - ./conf/my.cnf:/etc/mysql/my.cnf
-    - .:/code
-
-# Tomcat container
-tomcat_oscar:
-  restart: "always"
-  image: tomcat:7-jre8
-  ports:
-      - "8091:8080"  #HOST:CONTAINER
-  environment:
-    JDBC_URL: jdbc:mysql://db:3306/oscar_mcmaster?autoReconnect=true&zeroDateTimeBehavior=round&useOldAliasMetadataBehavior=true&jdbcCompliantTruncation=false
-    JDBC_USER: root
-    JDBC_PASS: liyi
-  volumes:
-    - ./code/oscar/target/oscar-14.0.0-SNAPSHOT.war:/usr/local/tomcat/webapps/oscar_mcmaster.war
-    - ./conf/logging.properties:/usr/local/tomcat/conf/logging.properties
-    - ./conf/logging-servlet.properties:/usr/local/tomcat/conf/logging-servlet.properties
-    - ./conf/oscar_mcmaster.properties:/usr/share/tomcat/oscar_mcmaster.properties
-    - ./conf/oscar_mcmaster.properties:/usr/local/tomcat/conf/oscar_mcmaster.properties
-    - ./conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
-    - ./conf/copy.sh:/usr/local/tomcat/conf/copy.sh
-  links:
-    - db    
+  # Tomcat container
+  tomcat_oscar:
+    restart: "always"
+    build: .
+    image: beapen/oscar_15b
+    ports:
+        - "8091:8080"  #HOST:CONTAINER
+    # environment:
+    #   JDBC_URL: jdbc:mysql://db:3306/oscar_mcmaster?autoReconnect=true&zeroDateTimeBehavior=round&useOldAliasMetadataBehavior=true&jdbcCompliantTruncation=false
+    #   JDBC_USER: root
+    #   JDBC_PASS: liyi
+    # volumes:
+    #   - ./code/oscar/target/oscar-14.0.0-SNAPSHOT.war:/usr/local/tomcat/webapps/oscar_mcmaster.war
+    #   - ./conf/logging.properties:/usr/local/tomcat/conf/logging.properties
+    #   - ./conf/logging-servlet.properties:/usr/local/tomcat/conf/logging-servlet.properties
+    #   - ./conf/oscar_mcmaster.properties:/usr/share/tomcat/oscar_mcmaster.properties
+    #   - ./conf/oscar_mcmaster.properties:/usr/local/tomcat/conf/oscar_mcmaster.properties
+    #   - ./conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+    #   - ./conf/copy.sh:/usr/local/tomcat/conf/copy.sh
+    # depends_on:
+    #   - builder
+    links:
+      - db    
 
