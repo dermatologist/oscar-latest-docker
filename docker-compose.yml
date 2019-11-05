@@ -26,6 +26,9 @@ services:
       - ./dbdump:/docker-entrypoint-initdb.d
       - ./conf/my.cnf:/etc/mysql/my.cnf
       - .:/code
+    networks:
+      - mt-network
+
 
   # Tomcat container
   tomcat_oscar:
@@ -34,10 +37,10 @@ services:
     image: beapen/oscar_15b
     ports:
         - "8091:8080"  #HOST:CONTAINER
-    # environment:
-    #   JDBC_URL: jdbc:mysql://db:3306/oscar_mcmaster?autoReconnect=true&zeroDateTimeBehavior=round&useOldAliasMetadataBehavior=true&jdbcCompliantTruncation=false
-    #   JDBC_USER: root
-    #   JDBC_PASS: liyi
+    environment:
+      JDBC_URL: jdbc:mysql://db:3306/oscar_mcmaster?autoReconnect=true&zeroDateTimeBehavior=round&useOldAliasMetadataBehavior=true&jdbcCompliantTruncation=false
+      JDBC_USER: root
+      JDBC_PASS: liyi
     # volumes:
     #   - ./code/oscar/target/oscar-14.0.0-SNAPSHOT.war:/usr/local/tomcat/webapps/oscar_mcmaster.war
     #   - ./conf/logging.properties:/usr/local/tomcat/conf/logging.properties
@@ -46,8 +49,11 @@ services:
     #   - ./conf/oscar_mcmaster.properties:/usr/local/tomcat/conf/oscar_mcmaster.properties
     #   - ./conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
     #   - ./conf/copy.sh:/usr/local/tomcat/conf/copy.sh
-    # depends_on:
-    #   - builder
-    links:
-      - db    
+    depends_on:
+      - db
+    networks:
+      - mt-network
 
+networks:
+  mt-network:
+    driver: bridge
