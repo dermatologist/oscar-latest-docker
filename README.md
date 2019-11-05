@@ -1,5 +1,11 @@
-# Dockerized OSCAR EMR (Updated Oct 2019)
-OSCAR EMR is an open-source Electronic Medical Record (EMR) for the Canadian family physicians.
+# Dockerized OSCAR EMR
+OSCAR EMR is an open-source Electronic Medical Record (EMR) for the Canadian family physicians. This is a script to deploy master branch from OSCAR repository on a docker container. This pulls a fork of OSCAR at [https://github.com/E-Health/oscar.](https://github.com/E-Health/oscar) The official repository is [here.](https://bitbucket.org/oscaremr/oscar.git)
+
+This is an experimental application and is not for production use.
+
+## What's new in V3.0 (Nov 2019)
+* builder container (No local java/maven needed)
+* Database is created from repo. (No sql needed)
 
 ## Prerequisites
 * GIT
@@ -7,28 +13,19 @@ OSCAR EMR is an open-source Electronic Medical Record (EMR) for the Canadian fam
 * Docker-compose
 
 ## How to Use this
-```
-./install.sh
-```
+* Just clone this repo and ./install.sh
+* Access oscar at http://localhost:8091/oscar_mcmaster/
+
+## Using external database
+* Change the setting in docker-compose.yml
 
 ## What the script does
-* Checks out master branch from OSCAR repo at bitbucket.
+* Checks out master branch from OSCAR repo.
 * Compile with maven.
 * Create Docker containers.
 * Deploy the database and application in the containers.
+* If you want to use an existing database, add it in *docker-compose.yml*
 
-## Development
-
-To update
-```
-docker cp oscar-14.0.0-SNAPSHOT.war tomcat_oscar:/usr/local/tomcat/webapps
-```
-
-To shell into the tomcat container
-```
-docker-compose exec tomcat_oscar bash
-```
-
-## Forked From (and, thanks to)
-* [Bell Eapen (McMaster U)](http://nuchange.ca)
-
+## Contributors
+* [Bell Eapen](http://nuchange.ca)
+* Thanks to [@countable](https://github.com/countable) for improving the database deployment.
