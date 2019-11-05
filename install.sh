@@ -13,12 +13,12 @@ docker-compose run builder
 echo "Setting up database containers. This may take some time...."
 docker-compose up -d db 
 echo "Waiting for db containers initialize (1 min)"
-docker-compose exec db ./populate-db.sh
+docker-compose exec db ./code/populate-db.sh
 echo "Bringing up tomcat"
 docker-compose up -d tomcat_oscar
 
-# echo "Waiting for containers to initialize (1 min)"
-# sleep 60
+echo "Waiting for containers to initialize (1 min)"
+sleep 60
 
 echo "Copying configuration files.."
 docker ps -a | awk '{ print $1,$2 }' | grep tomcat_oscar | awk '{print $1 }' | xargs -I {} docker exec -d {} chmod 755 /usr/local/tomcat/conf/copy.sh
