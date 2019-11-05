@@ -1,17 +1,17 @@
 diff a/install.sh b/install.sh	(rejected hunks)
-@@ -2,7 +2,7 @@
- echo "Cloning oscar from bitbucket"
- git clone --depth 1 https://bitbucket.org/oscaremr/oscar.git
- echo "Disabling Caisi"
--cp code/CaisiIntegratorUpdateTask.java oscar/src/main/java/org/oscarehr/PMmodule/caisi_integrator/
-+#cp code/CaisiIntegratorUpdateTask.java oscar/src/main/java/org/oscarehr/PMmodule/caisi_integrator/
- #cp code/Security.java oscar/src/main/java/org/oscarehr/common/model/
- cd oscar
+@@ -13,7 +13,7 @@ else
+ fi
+ 
  echo "Compiling OSCAR. This may take some time...."
-@@ -18,4 +18,4 @@ docker exec -d oscarlatestdocker_tomcat_oscar_1 /usr/local/tomcat/conf/copy.sh
+-docker-compose run builder
++#docker-compose run builder
+ echo "Setting up docker containers. This may take some time...."
+ docker-compose up -d db
+ echo "Waiting for db containers initialize (1 min)"
+@@ -23,5 +23,4 @@ echo "Bringing up tomcat"
+ docker-compose up -d tomcat_oscar
+ 
  echo "OSCAR is set up at http://localhost:8091/oscar_mcmaster"
- echo "You may have to restart the container http://localhost:8091/  (oscar/oscar)"
- echo "Thank You.."
--echo "Visit our website for more info: http://nuchange.ca"
-\ No newline at end of file
-+echo "Visit our website for more info: http://nuchange.ca"
+-echo "This script is a fork of "Oscar in a Box" by http://nuchange.ca"
+-
++echo "This script is a fork of 'Oscar in a Box' by http://nuchange.ca"
