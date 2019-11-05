@@ -1,12 +1,11 @@
 FROM openjdk:8 as builder
 
 RUN mkdir -p /home && \
-    git clone --depth 1 --single-branch --branch feature/Container-1 https://github.com/E-Health/oscar.git
-
+    cd /home 
 
 COPY . /home
-WORKDIR /home
-RUN ./build.sh
+WORKDIR /home/oscar
+RUN /home/build.sh
 
 FROM tomcat:7-jre8 as ship
 
