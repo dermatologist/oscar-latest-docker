@@ -3,15 +3,17 @@ OSCAR EMR is an open-source Electronic Medical Record (EMR) for the Canadian fam
 
 This is an experimental application and is not for production use.
 
+## What's new in V3.0 (Nov 2019)
+* builder container (No local java/maven needed)
+* Database is created from repo. (No sql needed)
+
 ## Prerequisites
 * GIT
-* Maven
 * Docker
 * Docker-compose
-* USE THE LATEST DATABASE DUMP. You may have to add all update sql too.  
 
 ## How to Use this
-* Just clone this repo, add database dump (Oscar15ON.sql) to dbdump and ./install.sh
+* Just clone this repo and ./install.sh
 * Access oscar at http://localhost:8091/oscar_mcmaster/
 
 ## Using external database
@@ -24,5 +26,6 @@ This is an experimental application and is not for production use.
 * Deploy the database and application in the containers.
 * If you want to use an existing database, add it in *docker-compose.yml*
 
-## Author
+## Contributors
 * [Bell Eapen](http://nuchange.ca)
+* Thanks to [@countable](https://github.com/countable) for improving the database deployment.
