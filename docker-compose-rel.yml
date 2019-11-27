@@ -1,0 +1,49 @@
+# Dockerized OSCAR EMR by Bell Eapen
+# Date: May 8, 2017
+# Website: http://nuchange.ca
+# Updated by Clark Van Oyen from countable.ca 2019
+# MySQL database shared with tomcat containers.
+version: '3.0'
+services:
+  db:
+    restart: "always"
+    image: mariadb:10.4
+    command: "mysqld --character-set-server=utf8 --collation-server=utf8_general_ci"
+    environment:
+      MYSQL_ROOT_PASSWORD: liyi
+      MYSQL_DATABASE: oscar_mcmaster
+      MYSQL_USER: oscar
+      MYSQL_PASSWORD: oscar
+    volumes:
+      - ./dbdump:/docker-entrypoint-initdb.d
+      - ./conf/my.cnf:/etc/mysql/my.cnf
+      - .:/code
+    networks:
+      - mt-network
+
+
+  # Tomcat container
+  tomcat_oscar:
+    restart: "always"
+    build:
+      context: .
+      dockerfile: Dockerfile-rel
+    image: beapen/oscar_15c
+    ports:
+        - "8091:8080"  #HOST:CONTAINER
+    environment:
+      JDBC_URL: "jdbc:mysql://db:3306/oscar_mcmaster?autoReconnect=true&zeroDateTimeBehavior=round&useOldAliasMetadataBehavior=true&jdbcCompliantTruncation=false"
+      JDBC_USER: root
+      JDBC_PASS: liyi
+      db_username: root
+      db_password: liyi
+      db_uri: "jdbc:mysql://db:3306/"
+      db_name: "oscar_mcmaster?autoReconnect=true&zeroDateTimeBehavior=round&useOldAliasMetadataBehavior=true&jdbcCompliantTruncation=false"
+    depends_on:
+      - db
+    networks:
+      - mt-network
+
+networks:
+  mt-network:
+    driver: bridge
