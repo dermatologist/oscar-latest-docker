@@ -1,16 +1,11 @@
 #!/bin/sh
 ./clone.sh
-
-echo "Compiling OSCAR. This may take some time...."
-# docker-compose run builder
-
-
 echo "Setting up database containers. This may take some time...."
-docker-compose up -d db 
+docker-compose -f docker-compose-rel.yml up -d db 
 echo "Waiting for db containers initialize (1 min)"
 docker-compose exec db ./code/populate-db.sh
 echo "Bringing up tomcat"
-docker-compose up -d tomcat_oscar
+docker-compose -f docker-compose-rel.yml up -d tomcat_oscar
 
 # echo "Waiting for containers to initialize (1 min)"
 # sleep 60
