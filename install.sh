@@ -1,10 +1,5 @@
 #!/bin/sh
-echo "Cloning oscar"
-git clone --depth 1 --single-branch --branch feature/Container-1 https://github.com/E-Health/oscar.git
-# cd oscar
-# echo "Compiling OSCAR. This may take some time...."
-# mvn package -Dmaven.test.skip=true
-# cd ..
+./clone.sh
 
 echo "Compiling OSCAR. This may take some time...."
 # docker-compose run builder
