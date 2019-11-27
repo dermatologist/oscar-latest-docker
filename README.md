@@ -8,7 +8,7 @@ This is an experimental application and is not for production use.
 * Database is created from repo. (No sql needed)
 ### Update 
 * Added an install script that downloads pre-compiled war from jenkins to the docker container
-* This includes drugref ([@countable](https://github.com/countable))
+* This includes drugref (Thanks [@countable](https://github.com/countable))
 * Useful for testing: Use ./install-rel.sh 
 
 ## Prerequisites
