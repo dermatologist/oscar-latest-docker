@@ -1,5 +1,5 @@
 #!/bin/sh
-./clone.sh
+./clone-rel.sh
 echo "Setting up database containers. This may take some time...."
 docker-compose -f docker-compose-rel.yml up -d db 
 echo "Waiting for db containers initialize (1 min)"
