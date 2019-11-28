@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Cloning oscar from bitbucket"
+echo "Cloning oscar:"
 if [ -d "./oscar" ]; then
     echo "already cloned"
 else
